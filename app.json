@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Expo Redux Template",
-    "slug": "expo-redux-template",
+    "name": "Yelblu",
+    "slug": "Yelblu",
     "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,7 +13,7 @@
     },
     "updates": {
       "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/82716b8e-2818-4161-8a88-c571df4369a5"
+      "url": "https://u.expo.dev/194ed7c0-1676-4b57-ab91-e5a1dd37440e"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -32,10 +32,19 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [],
+    "plugins": [
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "react-native",
+          "organization": "ho-chi-minh-city-university-wn"
+        }
+      ]
+    ],
     "extra": {
       "eas": {
-        "projectId": "82716b8e-2818-4161-8a88-c571df4369a5"
+        "projectId": "194ed7c0-1676-4b57-ab91-e5a1dd37440e"
       }
     },
     "runtimeVersion": {

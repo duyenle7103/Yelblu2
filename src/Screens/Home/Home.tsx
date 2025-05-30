@@ -1,8 +1,9 @@
-import { i18n, LocalizationKey } from "@/Localization";
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { HStack, Spinner, Heading } from "native-base";
+import { Heading,HStack, Spinner } from "native-base";
+import React from "react";
+import { StyleSheet,Text, View } from "react-native";
+
+import { i18n, LocalizationKey } from "@/Localization";
 import { User } from "@/Services";
 
 export interface IHomeProps {
