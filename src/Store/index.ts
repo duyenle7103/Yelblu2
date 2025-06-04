@@ -1,17 +1,19 @@
-import { API } from "@/Services/base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import {
-  persistReducer,
-  persistStore,
   FLUSH,
-  REHYDRATE,
   PAUSE,
   PERSIST,
+  persistReducer,
+  persistStore,
   PURGE,
   REGISTER,
+  REHYDRATE,
 } from "redux-persist";
+
+import { API } from "@/Services/base";
+
 import { homeReducers, themeReducers } from "./reducers";
 
 const reducers = combineReducers({
@@ -23,7 +25,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  whitelist: ["theme"],
+  whitelist: ["theme", "auth"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -50,4 +52,4 @@ const persistor = persistStore(store);
 
 setupListeners(store.dispatch);
 
-export { store, persistor };
+export { persistor, store };

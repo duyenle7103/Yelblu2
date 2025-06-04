@@ -4,6 +4,7 @@ import React from "react";
 import { StatusBar } from "react-native";
 
 import { RootScreens } from "@/Screens";
+import { LoginContainer } from "@/Screens/Auth";
 import { WelcomeContainer } from "@/Screens/Welcome";
 
 import { MainNavigator } from "./Main";
@@ -11,19 +12,25 @@ import { MainNavigator } from "./Main";
 export type RootStackParamList = {
   [RootScreens.MAIN]: undefined;
   [RootScreens.WELCOME]: undefined;
+  [RootScreens.LOGIN]: undefined;
+  // [RootScreens.REGISTER]: undefined;
+  // [RootScreens.FORGOT_PASSWORD]: undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
-// @refresh reset
 const ApplicationNavigator = () => {
   return (
     <NavigationContainer>
       <StatusBar />
-      <RootStack.Navigator screenOptions={{ headerShown: false }}>
+      <RootStack.Navigator screenOptions={{ headerShown: false }} initialRouteName={RootScreens.WELCOME}>
         <RootStack.Screen
           name={RootScreens.WELCOME}
           component={WelcomeContainer}
+        />
+        <RootStack.Screen
+          name={RootScreens.LOGIN}
+          component={LoginContainer}
         />
         <RootStack.Screen
           name={RootScreens.MAIN}

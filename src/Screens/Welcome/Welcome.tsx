@@ -1,8 +1,10 @@
-import React from "react";
-import { i18n, LocalizationKey } from "@/Localization";
-import { View, Text, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Button } from "native-base";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+
+import { i18n, LocalizationKey } from "@/Localization";
+
 import { RootScreens } from "..";
 
 export const Welcome = (props: {
@@ -12,7 +14,7 @@ export const Welcome = (props: {
     <View style={styles.container}>
       <Text>{i18n.t(LocalizationKey.WELCOME)}</Text>
       <StatusBar style="auto" />
-      <Button onPress={() => props.onNavigate(RootScreens.MAIN)}>
+      <Button onPress={() => props.onNavigate(RootScreens.LOGIN)}>
         {i18n.t(LocalizationKey.START)}
       </Button>
     </View>
