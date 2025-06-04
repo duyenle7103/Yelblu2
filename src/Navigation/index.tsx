@@ -5,6 +5,7 @@ import { StatusBar } from "react-native";
 
 import { RootScreens } from "@/Screens";
 import { LoginContainer } from "@/Screens/Auth";
+import {RecipeSearchContainer} from "@/Screens/RecipeSearch";
 import { WelcomeContainer } from "@/Screens/Welcome";
 
 import { MainNavigator } from "./Main";
@@ -15,6 +16,7 @@ export type RootStackParamList = {
   [RootScreens.LOGIN]: undefined;
   // [RootScreens.REGISTER]: undefined;
   // [RootScreens.FORGOT_PASSWORD]: undefined;
+  [RootScreens.RECIPE_SEARCH]: undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -36,6 +38,10 @@ const ApplicationNavigator = () => {
           name={RootScreens.MAIN}
           component={MainNavigator}
           options={{}}
+        />
+        <RootStack.Screen
+          name={RootScreens.RECIPE_SEARCH}
+          component={RecipeSearchContainer}
         />
       </RootStack.Navigator>
     </NavigationContainer>

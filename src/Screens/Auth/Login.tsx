@@ -33,7 +33,7 @@ export const Login = (props: {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={props.onLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 

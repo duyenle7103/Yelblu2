@@ -45,7 +45,7 @@ export const LoginContainer = ({ navigation }: LoginScreenNavigatorProps) => {
         );
 
         // Navigate to main screen after successful login
-        navigation.navigate(RootScreens.MAIN);
+        navigation.navigate(RootScreens.RECIPE_SEARCH);
     };
 
     const onNavigateToRegister = () => {

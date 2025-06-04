@@ -4,4 +4,5 @@ export enum RootScreens {
   LOGIN = "Login",
   REGISTER = "Register",
   FORGOT_PASSWORD = "ForgotPassword",
+  RECIPE_SEARCH = "RecipeSearch",
 }

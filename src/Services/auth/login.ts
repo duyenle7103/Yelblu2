@@ -5,7 +5,7 @@ export interface LoginDto {
 
 export async function apiLogin(identity: string, password: string) {
     try {
-        const response = await fetch("https://localhost:3000/auth/login", {
+        const response = await fetch("https://yelblube.onrender.com/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

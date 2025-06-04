@@ -1,1 +1,1 @@
-export { default } from './RecipeSearchContainer';
+export * from './RecipeSearchContainer';

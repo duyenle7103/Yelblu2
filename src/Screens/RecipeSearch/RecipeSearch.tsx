@@ -1,11 +1,17 @@
+import { Feather, Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import {
-  View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  FlatList,
+  Image,
 } from 'react-native';
-import { Feather, Ionicons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native';
 
-interface Props {
+export const RecipeSearch = (props: {
   onOpenCamera: () => void;
   onOpenLibrary: () => void;
   ingredients: string[];
@@ -14,20 +20,18 @@ interface Props {
   searchText: string;
   onChangeSearchText: (text: string) => void;
   onSubmitSearch: () => void;
-}
-
-export default function RecipeSearch({
-  onOpenCamera,
-  onOpenLibrary,
-  ingredients,
-  onAddIngredient,
-  onRemoveIngredient,
-  searchText,
-  onChangeSearchText,
-  onSubmitSearch,
-}: Props) {
+  suggestedRecipes?: Array<{
+    id: number;
+    recipeName: string;
+    totalTime: number;
+    calories: number;
+    shortDescription: string;
+    imageUrl: string;
+  }>;
+}) => {
   return (
     <SafeAreaView style={styles.container}>
+      {/* Thanh tìm kiếm và nút camera / thư viện */}
       <View style={styles.searchRow}>
         <View style={styles.searchInputContainer}>
           <Ionicons name="search" size={20} color="#888" style={styles.icon} />
@@ -35,43 +39,68 @@ export default function RecipeSearch({
             style={styles.textInput}
             placeholder="Thêm nguyên liệu"
             placeholderTextColor="#888"
-            value={searchText}
-            onChangeText={onChangeSearchText}
-            onSubmitEditing={onSubmitSearch}
+            value={props.searchText}
+            onChangeText={props.onChangeSearchText}
+            onSubmitEditing={props.onSubmitSearch}
             returnKeyType="done"
           />
         </View>
 
-        <TouchableOpacity style={styles.iconButton} onPress={onOpenCamera}>
+        <TouchableOpacity style={styles.iconButton} onPress={props.onOpenCamera}>
           <Feather name="camera" size={22} color="#333" />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.iconButton} onPress={onOpenLibrary}>
+        <TouchableOpacity style={styles.iconButton} onPress={props.onOpenLibrary}>
           <Feather name="image" size={22} color="#333" />
         </TouchableOpacity>
       </View>
 
+      {/* Danh sách nguyên liệu */}
       <Text style={styles.sectionTitle}>Nguyên liệu đã chọn</Text>
       <View style={styles.tagContainer}>
-        {ingredients.map((item) => (
+        {props.ingredients.map((item) => (
           <View key={item} style={styles.tag}>
             <Text style={styles.tagText}>{item}</Text>
-            <TouchableOpacity onPress={() => onRemoveIngredient(item)}>
+            <TouchableOpacity onPress={() => props.onRemoveIngredient(item)}>
               <Feather name="x" size={16} color="#f5a623" />
             </TouchableOpacity>
           </View>
         ))}
       </View>
 
+      {/* Kết quả tìm kiếm */}
       <Text style={styles.sectionTitle}>Kết quả tìm kiếm</Text>
-
       <TouchableOpacity style={styles.filterButton}>
         <Feather name="filter" size={18} color="#f5a623" />
         <Text style={styles.filterText}>Bộ lọc</Text>
       </TouchableOpacity>
+
+      {/* Danh sách công thức gợi ý */}
+      <FlatList
+        data={props.suggestedRecipes}
+        keyExtractor={(item) => item.id.toString()}
+        style={{ marginTop: 10 }}
+        ListEmptyComponent={
+          <Text style={{ marginTop: 10, color: '#888' }}>
+            Chưa có công thức gợi ý
+          </Text>
+        }
+        renderItem={({ item }) => (
+          <View style={styles.recipeCard}>
+            <Image source={{ uri: item.imageUrl }} style={styles.recipeImage} />
+            <View style={styles.recipeInfo}>
+              <Text style={styles.recipeName}>{item.recipeName}</Text>
+              <Text style={styles.recipeDesc}>{item.shortDescription}</Text>
+              <Text style={styles.recipeMeta}>
+                Thời gian: {item.totalTime} phút | Calories: {item.calories}
+              </Text>
+            </View>
+          </View>
+        )}
+      />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: '#fff' },
@@ -85,8 +114,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     height: 40,
   },
-  textInput: { flex: 1, marginLeft: 8, fontSize: 16 },
   icon: { marginRight: 4 },
+  textInput: { flex: 1, marginLeft: 8, fontSize: 16 },
   iconButton: {
     marginLeft: 8,
     padding: 6,
@@ -98,16 +127,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     color: '#333',
-  },
-  filterButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  filterText: {
-    marginLeft: 4,
-    color: '#f5a623',
-    fontWeight: '600',
   },
   tagContainer: {
     flexDirection: 'row',
@@ -129,5 +148,44 @@ const styles = StyleSheet.create({
   tagText: {
     marginRight: 6,
     color: '#333',
+  },
+  filterButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  filterText: {
+    marginLeft: 4,
+    color: '#f5a623',
+    fontWeight: '600',
+  },
+  recipeCard: {
+    flexDirection: 'row',
+    marginVertical: 8,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 10,
+    overflow: 'hidden',
+    elevation: 1,
+  },
+  recipeImage: {
+    width: 100,
+    height: 100,
+  },
+  recipeInfo: {
+    flex: 1,
+    paddingHorizontal: 12,
+    justifyContent: 'center',
+  },
+  recipeName: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  recipeDesc: {
+    color: '#555',
+    marginVertical: 4,
+  },
+  recipeMeta: {
+    color: '#999',
+    fontSize: 12,
   },
 });
